@@ -103,7 +103,10 @@ function * finishTodoHandler({ payload }: FinishTodoProps) {
     const completedTodo: Todo = yield call(completeTodo);
 
     const updatedMyTodosState = myTodosClone.filter(t => t._id !== completedTodo._id);
-    const updatedDiscoverTodosState = [completedTodo, ...discoverTodosClone];
+
+    const updatedDiscoverTodosState = completedTodo.public
+      ? [completedTodo, ...discoverTodosClone]
+      : discoverTodosClone;
 
     yield put(setMyTodos(updatedMyTodosState));
     yield put(setDiscoverTodos(updatedDiscoverTodosState));

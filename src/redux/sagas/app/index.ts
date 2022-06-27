@@ -44,7 +44,7 @@ function * appLoadHandler({ payload }: AppLoad) {
     const getUser = () => api.service('security/session').find();
 
     const user: User = yield call(getUser);
-
+    console.log('hi');
     const [myTodos, feedTodos, discoverTodos, notifications, users]: [Todos, Todos, Todos, Notifications, Users] =
       yield call(() => Promise.all(getDataOnAuthentication(user._id)));
 
@@ -57,7 +57,8 @@ function * appLoadHandler({ payload }: AppLoad) {
 
     payload.navigate('Home');
   } catch(e) {
-    console.log(e);
+    //@ts-ignore
+    console.log(e.message);
     payload.navigate('Landing');
   }
 

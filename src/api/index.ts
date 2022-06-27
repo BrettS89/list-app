@@ -3,7 +3,7 @@ import feathers from '@feathersjs/feathers';
 import rest from '@feathersjs/rest-client';
 import axios from 'axios';
 
-const url = 'http://localhost:3030';
+const url = 'http://localhost:3035';
 
 const app = feathers();
 
