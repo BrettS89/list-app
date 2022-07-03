@@ -38,3 +38,7 @@ export const onLikeTodo: Action<string> = payload => ({
   type: ActionTypes.ON_LIKE_TODO,
   payload,
 });
+
+export const getTodos = () => ({
+  type: ActionTypes.GET_TODOS,
+});

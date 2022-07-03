@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import Back from '@expo/vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/native';
 import colors from '../../shared/colors';

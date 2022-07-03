@@ -56,7 +56,7 @@ export const getDataOnAuthentication = (userId: string) => {
   const users = api.service('security/user').find({
     query: {
       $sort: { _id: -1 },
-      $limit: 50,
+      $limit: 10,
       $resolve: {
         avatar: true,
       }

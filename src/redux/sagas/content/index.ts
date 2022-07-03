@@ -11,12 +11,13 @@ import {
   setMyTodos,
 } from '../../actions';
 import { StoreState, userSelector, contentSelector } from '../../index';
-import { Todo } from '../../../types';
+import { Todo, Todos } from '../../../types';
 
 export default [
   addTodoWatcher,
   finishTodo,
   likeTodoWatcher,
+  getTodosWatcher,
 ];
 
 function * addTodoWatcher() {
@@ -29,6 +30,10 @@ function * finishTodo() {
 
 function * likeTodoWatcher() {
   yield takeLatest(ActionTypes.ON_LIKE_TODO, likeTodoHandler);
+}
+
+function * getTodosWatcher() {
+  yield takeLatest(ActionTypes.GET_TODOS, getTodosHandler);
 }
 
 interface AddTodoProps {
@@ -152,6 +157,39 @@ function * likeTodoHandler({ payload }: LikeTodoProps) {
 
     yield put(setDiscoverTodos(updatedDiscover));
     yield put(setFriendsTodos(updatedFeed));
+  } catch(e) {
+
+  }
+}
+
+function * getTodosHandler() {
+  try {
+    const content: StoreState['content'] = yield select(contentSelector);
+
+    const fn = () => api
+      .service('content/to-do')
+      .find({
+        query: {
+          $sort: { updatedAt: -1 },
+          completed: true,
+          public: true,
+          $limit: 20,
+          $skip: content.todos.discover.length,
+          $resolve: {
+            file: true,
+            user: true,
+            comments: true,
+            likes: true,
+            youLiked: true,
+          },
+        },
+      });
+
+    const discoverTodos: Todos = yield call(fn);
+
+    const updatedDiscoverTodos = [...content.todos.discover, ...discoverTodos.data];
+
+    yield put(setDiscoverTodos(updatedDiscoverTodos));
   } catch(e) {
 
   }

@@ -19,6 +19,9 @@ import Signup from '../modules/auth/signup';
 import PageTitle from '../components/page-title';
 import AddTodoButton from '../modules/main/to-dos/list/add-button';
 
+import UserSearch from '../modules/main/users/search';
+import Header from '../components/header';
+
 const headerOptions = {
   title: null as null,
   headerShadowVisible: false,
@@ -41,9 +44,10 @@ const MainStackComponent = () => {
   return (
     <TodoStack.Navigator screenOptions={{  }}>
       <TodoStack.Screen options={{
-        ...headerOptions,
-        headerLeft: () => <PageTitle title='To-do list'/>,
-        headerRight: () => <AddTodoButton />,
+        header: () => <Header type='title' title='To-do list' addTodo />,
+        // ...headerOptions,
+        // headerLeft: () => <PageTitle title='To-do list'/>,
+        // headerRight: () => <AddTodoButton />,
       }} name='TodosStack' component={Todos} />
       <TodoStack.Screen options={{
         ...headerOptions,
@@ -75,8 +79,7 @@ const NotificationsStackComponent = () => {
   return (
     <NotificationsStack.Navigator>
       <NotificationsStack.Screen options={{
-        ...headerOptions,
-        headerLeft: () => <PageTitle title='Notifications'/>,
+        header: () => <Header type='title' title='Notifications' />,
       }} name='NotificationsScreen' component={Notifications} />
     </NotificationsStack.Navigator>
   );
@@ -85,7 +88,10 @@ const NotificationsStackComponent = () => {
 const UsersStackComponent = () => {
   return (
     <UsersStack.Navigator>
-      <UsersStack.Screen options={headerOptions} name='UsersScreen' component={Users} />
+      <UsersStack.Screen options={{
+        header: () => <Header type='user-search' />
+      }}
+      name='UsersScreen' component={Users} />
     </UsersStack.Navigator>
   )
 }

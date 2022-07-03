@@ -10,10 +10,12 @@ interface Action {
 export interface UserState {
   details?: User;
   list: User[];
+  searchTerm: string;
 }
 
 const INITIAL_STATE: UserState = {
   list: [],
+  searchTerm: '',
 };
 
 export const userReducer: Reducer<UserState, Action> = (state = INITIAL_STATE, { type, payload }) => {
@@ -29,6 +31,12 @@ export const userReducer: Reducer<UserState, Action> = (state = INITIAL_STATE, {
         ...state,
         list: payload,
       };
+
+    case ActionTypes.SET_USER_SEARCH_TERM:
+      return {
+        ...state,
+        searchTerm: payload,
+      }
       
     default:
       return state;
